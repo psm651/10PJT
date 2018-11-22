@@ -169,6 +169,35 @@ public class PurchaseController {
 		
 		return modelAndView;
 	}
+	@RequestMapping(value="listPurchase2")
+	public ModelAndView listPurchase2( @ModelAttribute("search") Search search,@RequestParam("currentPage") int currentPage) throws Exception{
+		
+		System.out.println("/purchase/listPurchase2");
+		if(search.getCurrentPage() ==0||currentPage ==0){
+			search.setCurrentPage(1);
+		}else {
+			search.setCurrentPage(currentPage);	
+		}
+		
+		search.setPageSize(pageSize);
+		search.setOrder(search.getOrder());
+		
+		// Business logic 수행
+		Map<String , Object> map=purchaseService.getPurchaseList2(search);
+		
+		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
+		System.out.println(resultPage);
+		
+		// Model 과 View 연결
+		ModelAndView modelAndView= new ModelAndView();
+		modelAndView.setViewName("forward:/purchase/listPurchase2.jsp");
+		modelAndView.addObject("list", map.get("list"));
+		modelAndView.addObject("resultPage", resultPage);
+		modelAndView.addObject("search", search);
+	
+		
+		return modelAndView;
+	}
 	
 	@RequestMapping(value="updateTranCodeActionByProd",method=RequestMethod.GET)
 	public ModelAndView updateTranCodeActionByProd(@ModelAttribute("purchase") Purchase purchase, @RequestParam("prodNo") int prodNo,

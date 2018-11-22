@@ -63,9 +63,11 @@ public class ProductController {
 	@RequestMapping(value="addProduct", method = RequestMethod.POST)
 	public String addProduct( @ModelAttribute("product") Product product, @RequestParam("fileNa") MultipartFile file ) throws Exception {
 
-		System.out.println("/product/addProduct : POST");
+		
+		System.out.println("/product/addProduct : POST44444444444444444444444444");
 		//Business Logic
-		File file1=new File("C:\\workspace\\10.Model2MVCShop(Ajax)\\WebContent\\images\\uploadFiles",file.getOriginalFilename());
+		File file1=new File("C:\\Users\\Bit\\git\\repository10\\10.Model2MVCShop(Ajax)\\",file.getOriginalFilename());
+		System.out.println("========file1"+file1+"--------fileNa"+file);
 		file.transferTo(file1);
 		product.setFileName(file.getOriginalFilename());
 		productService.addProduct(product);

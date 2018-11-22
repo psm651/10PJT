@@ -136,6 +136,14 @@ WHERE p.prod_no=t.prod_no(+) AND p.prod_no = #{value}
 		WHERE row_seq BETWEEN #{search.startRowNum} AND #{search.endRowNum} 
 	 </select> 
 	 
+	 <select  id="getPurchaseList2"  parameterType="map"	resultMap="purchaseSelectMap">
+	  		SELECT *
+	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
+	  					FROM (SELECT * 
+	  	FROM transaction 	) inner_table
+						WHERE ROWNUM &lt;= #{search.endRowNum} )
+		WHERE row_seq BETWEEN #{search.startRowNum} AND #{search.endRowNum} 
+	 </select>
 	 
 	 	 <!-- 위 두번째 subQuery 의  
 	 			WHERE ROWNUM &lt;= #{endRowNum} ) 는
@@ -152,6 +160,11 @@ WHERE p.prod_no=t.prod_no(+) AND p.prod_no = #{value}
 	 <select  id="getTotalCount"  parameterType="java.lang.String"	 resultType="int">
 	  	SELECT COUNT(*)
 	  	FROM(	SELECT * FROM transaction where buyer_id = #{value}) countTable			
+	 </select>
+	 
+	  <select  id="getTotalCount2"  parameterType="java.lang.String"	 resultType="int">
+	  	SELECT COUNT(*)
+	  	FROM(	SELECT * FROM transaction ) countTable			
 	 </select>
 	
 </mapper>

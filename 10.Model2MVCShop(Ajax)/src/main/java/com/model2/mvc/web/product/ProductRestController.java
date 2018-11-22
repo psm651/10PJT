@@ -53,7 +53,7 @@ public class ProductRestController {
 	@RequestMapping(value="json/addProduct", method = RequestMethod.GET)
 	public String addProduct() throws Exception {
 
-		System.out.println("/product/addProduct : GET");
+		System.out.println("/product/json/addProduct : GET");
 	
 		
 		return "redirect:/product/addProductView.jsp";

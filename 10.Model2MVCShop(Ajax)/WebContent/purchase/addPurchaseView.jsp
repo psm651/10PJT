@@ -61,6 +61,7 @@ $(function(){
 		fncAddPurchase();
 	}
 });	
+});
 $(function(){
 	
 	$("td.ct_btn01:contains('취소')").on("click",function(){
@@ -170,6 +171,17 @@ $(function(){
 		<td bgcolor="D6D6D6" width="1"></td>
 		<td class="ct_write01">${user.userId }</td>
 		<input type="hidden" name="buyerId" value="${user.userId }" />
+	</tr>
+	<tr>
+		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
+	</tr>
+	<tr>
+		<td width="104" class="ct_write">수량</td>
+		<td bgcolor="D6D6D6" width="1"></td>
+		<td class="ct_write01">
+			<input		type="text" name="stock" 	class="ct_input_g" 
+							style="width: 100px; height: 19px" maxLength="20" />
+		</td>
 	</tr>
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>

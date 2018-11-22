@@ -50,6 +50,20 @@ $(function() {
 	});
 });
  */
+ $(function() {
+		/* $(".ct_list_pop td:nth-child(5) ").on("click" , function(){ */
+			$("#prodFile ").on("click" , function(){
+			var prodNo = $(this).data("param1");
+			if ( ${param.menu=="search"}) {
+				self.location = "/product/getProduct?prodNo="+prodNo+"&menu=search";
+			};
+
+			if ( ${param.menu=="manage"}) {
+				self.location = "/product/updateProduct?prodNo="+prodNo+"&menu=manage";
+			};
+			});
+	 });
+
 $(function() {
 	
 	$("#prodNAME ").on("click" , function(){
@@ -188,7 +202,7 @@ $(function() {
 		<td align="left">${product.prodNo}</td>
 		<td></td>
 		</c:if>
-		<td>
+		<td id="prodFile" data-param1="${product.prodNo}">
 			<img src="/images/uploadFiles/${product.fileName}" width="100" height="80" align="absmiddle"/>
 		</td>
 		</td>	

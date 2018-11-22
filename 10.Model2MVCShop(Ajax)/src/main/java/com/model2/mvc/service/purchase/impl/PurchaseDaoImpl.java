@@ -75,4 +75,18 @@ public class PurchaseDaoImpl implements PurchaseDao{
 	
 	// 게시판 Page 처리를 위한 전체 Row(totalCount)  return
 	*/
+
+	@Override
+	public List<Purchase> getPurchaseList2(Search search) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("search", search);
+		
+		return sqlSession.selectList("PurchaseMapper.getPurchaseList2", map);
+	}
+
+	@Override
+	public int getTotalCount2() throws Exception {
+		
+		return sqlSession.selectOne("PurchaseMapper.getTotalCount2");
+	}
 }

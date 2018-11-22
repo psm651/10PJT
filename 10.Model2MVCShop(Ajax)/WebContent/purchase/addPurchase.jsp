@@ -28,6 +28,13 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>수량</td>
+		<td>
+		${purchase.stock} 
+		</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>구매방법</td>
 		<td>
 		${purchase.paymentOption=='1' ? "현금구매" : "신용구매"} 
