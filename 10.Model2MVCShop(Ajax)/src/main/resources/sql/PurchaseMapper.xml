@@ -71,11 +71,13 @@
 <result jdbcType="CHAR" column="TRAN_STATUS_CODE" property="tranCode"/>
 <result jdbcType="DATE" column="order_data" property="orderDate"/>
 <result jdbcType="DATE" column="DLVY_DATE" property="divyDate"/>
+<result jdbcType="NUMERIC" 	column="purchase_stock" 		property="purchaseStock" 	/>
+
 </resultMap>
 
 <insert id="addPurchase" parameterType="com.model2.mvc.service.domain.Purchase">
 INSERT INTO transaction (tran_no, prod_no, buyer_id, payment_option, receiver_name, receiver_phone, demailaddr,
- dlvy_request, tran_status_code, order_data, dlvy_date)
+ dlvy_request, tran_status_code, order_data, dlvy_date, purchase_stock)
 VALUES (seq_transaction_tran_no.NEXTVAL,
 #{purchaseProd.prodNo:NUMERIC},
 #{buyer.userId:VARCHAR},
@@ -86,17 +88,18 @@ VALUES (seq_transaction_tran_no.NEXTVAL,
 #{divyRequest:VARCHAR},
 #{tranCode:CHAR},
 SYSDATE,
-#{divyDate:DATE} ) 
+#{divyDate:DATE},
+#{purchaseStock:NUMERIC} ) 
 </insert>
 
 <select id="getPurchase" resultMap="purchaseSelectMap" parameterType="int">
-SELECT t.prod_no, t.buyer_id, t.payment_option, t.receiver_name, t.receiver_phone, t.demailaddr, t.dlvy_request, t.dlvy_date, t.order_data, t.tran_status_code, t.tran_no, p.prod_name 
+SELECT t.prod_no, t.buyer_id, t.payment_option, t.receiver_name, t.receiver_phone, t.demailaddr, t.dlvy_request, t.dlvy_date, t.order_data, t.tran_status_code, t.tran_no, p.prod_name ,t.purchase_stock
 FROM transaction t, product p 
 WHERE p.prod_no=t.prod_no(+) AND t.tran_no = #{value}
  </select>
  
  <select id="getPurchase2" resultMap="purchaseSelectMap" parameterType="int">
-SELECT p.prod_no,p.prod_detail,p.manufacture_day,p.price,p.reg_date, t.buyer_id, t.payment_option, t.receiver_name, t.receiver_phone, t.demailaddr, t.dlvy_request, t.dlvy_date, t.order_data, t.tran_status_code, t.tran_no, p.prod_name 
+SELECT p.prod_no,p.prod_detail,p.manufacture_day,p.price,p.reg_date, t.buyer_id, t.payment_option, t.receiver_name, t.receiver_phone, t.demailaddr, t.dlvy_request, t.dlvy_date, t.order_data, t.tran_status_code, t.tran_no, p.prod_name, t.purchase_stock 
 FROM transaction t, product p 
 WHERE p.prod_no=t.prod_no(+) AND p.prod_no = #{value}
  </select>
@@ -112,7 +115,8 @@ WHERE p.prod_no=t.prod_no(+) AND p.prod_no = #{value}
 			receiver_phone	=	#{receiverPhone},
 			demailaddr	=	#{divyAddr},
 			dlvy_request	=	#{divyRequest},
-			dlvy_date	=	#{divyDate}
+			dlvy_date	=	#{divyDate},
+			purchase_stock = #{purchaseStock}
 			
 	   	</set>
 	   	WHERE tran_no = #{tranNo}

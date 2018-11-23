@@ -17,6 +17,7 @@ public class Purchase {
 	private String receiverPhone;
 	private String tranCode;
 	private int tranNo;
+	private int purchaseStock;
 
 	public Purchase(){
 	}
@@ -89,14 +90,21 @@ public class Purchase {
 		this.tranNo = tranNo;
 	}
 	
+
+
+	public int getPurchaseStock() {
+		return purchaseStock;
+	}
+
+	public void setPurchaseStock(int purchaseStock) {
+		this.purchaseStock = purchaseStock;
+	}
+
 	@Override
 	public String toString() {
-		return "PurchaseVO [buyer=" + buyer + ", divyAddr=" + divyAddr
-				+ ", divyDate=" + divyDate + ", divyRequest=" + divyRequest
-				+ ", orderDate=" + orderDate + ", paymentOption="
-				+ paymentOption + ", purchaseProd=" + purchaseProd
-				+ ", receiverName=" + receiverName + ", receiverPhone="
-				+ receiverPhone + ", tranCode=" + tranCode + ", tranNo="
-				+ tranNo + "]";
+		return "Purchase [buyer=" + buyer + ", divyAddr=" + divyAddr + ", divyDate=" + divyDate + ", divyRequest="
+				+ divyRequest + ", orderDate=" + orderDate + ", paymentOption=" + paymentOption + ", purchaseProd="
+				+ purchaseProd + ", receiverName=" + receiverName + ", receiverPhone=" + receiverPhone + ", tranCode="
+				+ tranCode + ", tranNo=" + tranNo + ", purchaseStock=" + purchaseStock + "]";
 	}
 }

@@ -158,7 +158,7 @@
 				</td>
 				</c:if>
  				<c:if test="${param.menu != 'manage' }">
-					<c:if test="${!empty sessionScope.user && product.proTranCode == null }">
+					<c:if test="${!empty sessionScope.user && product.stock != '0' }">
 						<tr>
 		
 				<td width="17" height="23">

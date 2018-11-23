@@ -60,7 +60,7 @@ public class PurchaseDaoImpl implements PurchaseDao{
 
 	@Override
 	public Purchase findPurchase2(int prodNo) throws Exception {
-	
+	System.out.println("findPurchase2µé¾î¿Ó´Ù");
 		return sqlSession.selectOne("PurchaseMapper.getPurchase2", prodNo);
 	}
 	@Override

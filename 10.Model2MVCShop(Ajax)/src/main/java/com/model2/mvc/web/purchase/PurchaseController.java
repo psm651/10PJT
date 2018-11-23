@@ -61,7 +61,7 @@ public class PurchaseController {
 	@RequestMapping(value="addPurchase",method=RequestMethod.GET)
 	public ModelAndView addPurchase(@RequestParam("prodNo") int prodNo) throws Exception {
 
-		System.out.println("/purchase/addPurchase");
+		System.out.println("/purchase/addPurchase==GET방식");
 	
 		Purchase purchase = purchaseService.getPurchase2(prodNo);
 		Product product = productService.getProduct(prodNo);
@@ -69,6 +69,7 @@ public class PurchaseController {
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("forward:/purchase/addPurchaseView.jsp");
 		modelAndView.addObject("purchase", purchase);
+		System.out.println("GET방식으로 넘어가는 최종펄쳐스"+purchase);
 		modelAndView.addObject("product", product);
 		
 		
@@ -80,15 +81,21 @@ public class PurchaseController {
 	public ModelAndView addPurchase( @ModelAttribute("purchase") Purchase purchase, @RequestParam("buyerId") String buyerId,
 			@RequestParam("prodNo") int prodNo) throws Exception {
 
-		System.out.println("/purchase/addPurchase");
+		System.out.println("/purchase/addPurchase==POST방식");
 		//Business Logic
 		
 		purchase.setBuyer(userService.getUser(buyerId));
 		purchase.setPurchaseProd(productService.getProduct(prodNo));
 		purchase.setTranCode("1");
 		
-		purchaseService.addPurchase(purchase);
+		Product product=new Product();
+		product=productService.getProduct(prodNo);
 		
+		int stock=(product.getStock()-purchase.getPurchaseStock());
+		product.setStock(stock);
+		
+		productService.updateProduct(product);
+		purchaseService.addPurchase(purchase);
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("/purchase/addPurchase.jsp");
 		modelAndView.addObject("purchase", purchase);
@@ -201,17 +208,19 @@ public class PurchaseController {
 	
 	@RequestMapping(value="updateTranCodeActionByProd",method=RequestMethod.GET)
 	public ModelAndView updateTranCodeActionByProd(@ModelAttribute("purchase") Purchase purchase, @RequestParam("prodNo") int prodNo,
-			@RequestParam("tranCode") String tranCode,@RequestParam("currentPage") int currentPage ) throws Exception{
+			@RequestParam("tranCode") String tranCode,@RequestParam("currentPage") int currentPage, @RequestParam("userId") String userId) throws Exception{
 
 		System.out.println("/product/updateTranCodeActionByProd");
 		//Business Logic
 		
 		Product purchaseProd= productService.getProduct(prodNo);
+
 		purchase.setPurchaseProd(purchaseProd);
+		purchase.setBuyer(userService.getUser(userId));
 		purchase.setTranCode(tranCode);
 		purchaseService.updateTranCode(purchase);
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("redirect:/product/listProduct?menu=manage&currentPage="+currentPage);
+		modelAndView.setViewName("redirect:/purchase/listPurchase2?currentPage="+currentPage);
 		
 		return modelAndView;
 	}

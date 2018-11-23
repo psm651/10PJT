@@ -65,7 +65,12 @@ $(function() {
 	 });
 
 $(function() {
+	$( "input[name='order']" ).on("click" , function() {
+		
+						fncGetPageList(1);
+});
 	
+	//==========================
 	$("#prodNAME ").on("click" , function(){
 	var prodNo = $(this).data("param");
 	var prodName = $(this).text().trim();
@@ -132,7 +137,7 @@ $(function() {
 <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top:10px;">
 	<tr>
 	<td align="right">
-			<input type = "radio" name="order" value="priceDesc" ${search.order=='priceDesc' ? "checked" : "" }/>높은가격순
+			<input type = "radio" name="order" id="fkfk" value="priceDesc" ${search.order=='priceDesc' ? "checked" : "" }/>높은가격순
 			<input type="radio" name="order" value = "priceAsc" ${search.order=='priceAsc' ? "checked" : "" }/>낮은가격순
 			<select name="searchCondition" class="ct_input_g" style="width:80px">
 			<c:if test="${!empty user && user.role == 'admin' }">
@@ -217,7 +222,9 @@ $(function() {
 		<td align="left">${product.manuDate }</td>
 		<td></td>
 		<td align="left">
-		
+		<c:if test = "${product.stock =='0'}">재고없음</c:if>
+		<c:if test = "${product.stock !='0'}">판매가능</c:if>
+		<%-- 
 		<c:if test="${!empty user && user.role == 'admin' }">
 		
 			<c:if test="${param.menu=='manage' }">
@@ -241,18 +248,18 @@ $(function() {
 			</c:if>
 			</c:if>
 			
-			<%-- else if(request.getParameter("menu").equals("search")) {%>
+			else if(request.getParameter("menu").equals("search")) {%>
 				<%=vo.getProTranCode() %>
 			<%} %>
-		<%} --%>
+		<%}
 		<!-- else if(!role.equals("admin")){ %> -->
-		<%-- <%if(request.getParameter("menu").equals("search")){ %> --%>
-		<%-- <%if(vo.getProTranCode().equals("판매중")){ %> --%>
-		<%-- <%=vo.getProTranCode() %> --%>
-		<%-- <%}else{ %> --%>
-			<%-- <%} %> --%>
-			<%-- <%} %> --%>
-			<%-- 	<%} %> --%>
+		<%if(request.getParameter("menu").equals("search")){ %>
+		<%if(vo.getProTranCode().equals("판매중")){ %>
+		<%=vo.getProTranCode() %>
+		<%}else{ %>
+			<%} %>
+			<%} %>
+				<%} %>
 		<c:if test="${!empty user && user.role != 'admin' }">	
 			<c:if test="${param.menu=='search' }">	
 				<c:if test="${product.proTranCode != '0  '}" >			
@@ -264,8 +271,8 @@ $(function() {
 			</c:choose>				
 				</c:if>			
 			</c:if>
-		</c:if>
-		</td>	
+		</c:if>	 --%>
+		</td>
 	</tr>
 	<tr>
 			<td id="${product.prodName}" colspan="15" bgcolor="D6D7D6" height="1"></td>

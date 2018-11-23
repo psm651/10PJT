@@ -29,9 +29,7 @@
 	</tr>
 	<tr>
 		<td>¼ö·®</td>
-		<td>
-		${purchase.stock} 
-		</td>
+		<td>${purchase.purchaseStock}</td>
 		<td></td>
 	</tr>
 	<tr>

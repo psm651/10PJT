@@ -102,11 +102,20 @@ $(function() {
 				상태 입니다.</td>
 		<td></td>		
 		<td align="left">
-		<%-- <%if(vo.getTranCode().equals("배송중")){ %> --%>
-		<%-- <%} %> --%>
-		<c:if test="${purchase.tranCode=='2  ' }">
+
+		<c:if test="${!empty user && user.role == 'admin' }">
+		
+			<c:choose>
+				<c:when test = "${purchase.tranCode=='1  '}">구매완료<a href="/purchase/updateTranCodeActionByProd?prodNo=${purchase.purchaseProd.prodNo}&tranCode=2&currentPage=${resultPage.currentPage}&userId=${purchase.buyer.userId}">배송하기</a></c:when>
+				<c:when test = "${purchase.tranCode=='2  '}">배송중</c:when>
+				<c:when test = "${purchase.tranCode=='3  '}">배송완료</c:when>
+
+			</c:choose>
+		</c:if>
+			
+		<%-- <c:if test="${purchase.tranCode=='2  ' }">
 		<a href="/purchase/updateTranCode?tranNo=${purchase.tranNo }&tranCode=3&currentPage=${resultPage.currentPage}">물건도착</a>
-			</c:if>
+			</c:if> --%>
 		</td>
 		
 		<td align="left">

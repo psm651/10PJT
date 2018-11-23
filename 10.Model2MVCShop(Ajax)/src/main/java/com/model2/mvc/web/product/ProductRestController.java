@@ -156,8 +156,8 @@ public class ProductRestController {
 	}
 	
 	
-	@RequestMapping(value="json/listProduct",method=RequestMethod.GET)
-	public Map<String , Object> listProduct(  HttpServletRequest request) throws Exception{
+	@RequestMapping(value="json/listProduct/{order}",method=RequestMethod.GET)
+	public Map<String , Object> listProduct(  @PathVariable("order") String order, HttpServletRequest request) throws Exception{
 		
 		System.out.println("/product/json/listProduct : GET ");
 		Search search = new Search();
@@ -166,7 +166,7 @@ public class ProductRestController {
 		}
 	
 		search.setPageSize(pageSize);
-		search.setOrder(search.getOrder());
+		search.setOrder(order);
 		
 
 		search.setSearchCondition("");

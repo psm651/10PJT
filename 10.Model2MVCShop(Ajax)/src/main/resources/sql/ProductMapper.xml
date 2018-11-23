@@ -28,10 +28,15 @@
 	 </insert>
 	
 	 <!-- SQL : SELECT ONE -->
-	 <select 	id="getProduct"	parameterType="int"	resultMap="productSelectMap">
+<!-- 	 <select 	id="getProduct"	parameterType="int"	resultMap="productSelectMap">
 		SELECT p.prod_no, p.prod_name, p.image_file, p.prod_detail, p.manufacture_day, p.price, p.reg_date, t.tran_status_code,p.stock
 		 FROM product p, transaction t 
 		 WHERE p.prod_no = t.prod_no(+) AND p.prod_no= #{value}
+	 </select> -->
+	 	 <select 	id="getProduct"	parameterType="int"	resultMap="productSelectMap">
+		SELECT prod_no, prod_name, image_file, prod_detail, manufacture_day, price, reg_date, stock
+		 FROM product 
+		 WHERE prod_no= #{value}
 	 </select>
 	
 	  <!--  SQL : UPDATE-->
@@ -54,7 +59,7 @@
 	<select  id="getProductList"  parameterType="search"	resultMap="productSelectMap">
 	  		SELECT *
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
-	  					FROM (SELECT p.prod_no , p.prod_name, p.prod_detail, p.manufacture_day, p.price, p.image_file, p.reg_date, t.tran_status_code 
+	  					FROM (SELECT p.prod_no , p.prod_name, p.prod_detail,p.stock, p.manufacture_day, p.price, p.image_file, p.reg_date, t.tran_status_code 
 	  								FROM product p, transaction t 
 											<where>
 												 	p.prod_no=t.prod_no(+)
@@ -79,7 +84,7 @@
 												order by p.price Asc
 											</when>
 											<otherwise>
-												order by p.prod_no
+												order by p.prod_no DESC
 											</otherwise> </choose>
 											) inner_table
 						WHERE ROWNUM &lt;= #{endRowNum} )
@@ -99,7 +104,7 @@
 		<!-- SQL : SELECT ROW Count	    -->
 	 <select  id="getTotalCount"  parameterType="search"	 resultType="int">
 	  	SELECT COUNT(*)
-	  	FROM(	SELECT p.prod_no, p.prod_name, p.prod_detail, p.manufacture_day, p.price, p.image_file, p.reg_date, t.tran_status_code 
+	  	FROM(	SELECT p.prod_no,p.stock, p.prod_name, p.prod_detail, p.manufacture_day, p.price, p.image_file, p.reg_date, t.tran_status_code 
 	  	FROM product p, transaction t 
 											<where>
 												 	p.prod_no=t.prod_no(+)
